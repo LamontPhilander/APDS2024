@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/test', (req, res) => {
-    res.send('Testing the /test endpoint');
+    res.send('Testing the /test endpoint'); 
   })
 
 // start the Express server
