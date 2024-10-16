@@ -1,58 +1,36 @@
-# This config was automatically generated from your source code
-# Stacks detected: deps:node:frontend
 version: 2.1
-orbs:
-  node: circleci/node@5
+
 jobs:
-  test-node:
-    # Install node dependencies and run tests
-    executor: node/default
-    working_directory: ~/project/frontend
-    steps:
-      - checkout:
-          path: ~/project
-      - node/install-packages:
-          pkg-manager: npm
-      - run:
-          name: Run tests
-          command: npm test --passWithNoTests
-  build-node:
-    # Build node project
-    executor: node/default
-    working_directory: ~/project/frontend
-    steps:
-      - checkout:
-          path: ~/project
-      - node/install-packages:
-          pkg-manager: npm
-      - run:
-          command: npm run build
-      - run:
-          name: Create the ~/artifacts directory if it doesn't exist
-          command: mkdir -p ~/artifacts
-      # Copy output to artifacts dir
-      - run:
-          name: Copy artifacts
-          command: cp -R build dist public .output .next .docusaurus ~/artifacts 2>/dev/null || true
-      - store_artifacts:
-          path: ~/artifacts
-          destination: node-build
-  deploy:
-    # This is an example deploy job, not actually used by the workflow
+  say-hello:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/base:current 
     steps:
-      # Replace this with steps to deploy to users
-      - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
+      - checkout 
+      - run: echo "hello world" 
+
+  sonarqube:
+    working_directory: ~/build
+    docker:
+        - image: sonarsource/sonar-scanner-cli
+    resource_class: small
+    steps:
+      - run: find .
+      - attach_workspace:
+            at: ~/workspace
+      - run: |
+            SONAR_BRANCH="${CIRCLE_BRANCH :- master}"
+            echo "Sonar branch value is: "$SONAR_BRANCH
+            echo "Sonar org value is : "$SONAR_ORG
+            sonar-scanner \
+            -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
+            -Dsonar.organization="$SONAR_ORG" \
+            -Dsonar.host.url-https://sonarcloud.io \
+            -Dsonar.exclusions="/android/,/ios/" \
+            -Dsonar.login="$SONAR_TOKEN" \
+            -Dsonar.branch.name="$SONAR_BRANCH" \
+            -Dsonar.sources="."
+
 workflows:
-  build-and-test:
+  say-hello-workflow:
     jobs:
-      - test-node
-      - build-node:
-          requires:
-            - test-node
-    # - deploy:
-    #     requires:
-    #       - build-node
+      - say-hello
