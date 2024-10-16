@@ -10,17 +10,34 @@ const router = express.Router();
 var store = new ExpressBrute.MemoryStore();
 var bruteforce = new ExpressBrute(store);
 
-// sign up
-router.post('/signup', async (req, res) => {
-    const password = bcrypt.hash(req.body.password, 10);
+// Utility function for RegEx validation
+const validateInput = (input, pattern) => pattern.test(input);
+
+// Signup
+router.post("/signup", async (req, res) => {
+  const namePattern = /^[a-zA-Z0-9]{3,30}$/;
+  const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+  if (!validateInput(req.body.name, namePattern)) {
+    return res.status(400).json({ message: "Invalid name format" });
+  }
+  if (!validateInput(req.body.password, passwordPattern)) {
+    return res.status(400).json({ message: "Password must be at least 8 characters, contain letters and numbers" });
+  }
+
+  try {
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
     let newDocument = {
-        name: req.body.name,
-        password: (await password).toString()
+      name: req.body.name,
+      password: hashedPassword,
     };
-    let collection = await db.collection('users');
+    let collection = await db.collection("users");
     let result = await collection.insertOne(newDocument);
-    console.log(password);
-    res.send(result).status(204);
+    res.status(201).json({ message: "User created successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error during signup", error });
+  }
 });
 
 // login
