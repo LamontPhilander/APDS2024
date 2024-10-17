@@ -11,7 +11,7 @@ jobs:
   sonarqube:
     working_directory: ~/build
     docker:
-      image: cimg/python:3.13.0
+      - image: cimg/python:3.13.0
     resource_class: small
     steps:
       - checkout
