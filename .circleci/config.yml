@@ -32,17 +32,22 @@ jobs:
             exit 1
           fi
           # Export the path for sonar-scanner
-          export PATH=$PATH:$(pwd)/sonar-scanner-cli-6.2.1.4610-linux-x64/bin
+          export PATH=$PATH:$(pwd)/sonar-scanner-6.2.1.4610-linux-x64/bin
+          echo "Sonar-scanner added to PATH"
+
       - run: |
           echo "Current working directory: $(pwd)"
           echo "Current PATH: $PATH"
           echo "Contents of the current directory:"
           ls -la
-          echo "Contents of sonar-scanner-cli directory:"
-          ls -la sonar-scanner-cli-6.2.1.4610-linux-x64/bin || echo "Directory not found"
+          echo "Contents of sonar-scanner directory:"
+          ls -la sonar-scanner-6.2.1.4610-linux-x64/bin || echo "Directory not found"
+
       - run: find .
+
       - attach_workspace:
           at: ~/workspace
+
       - run: |
           if [ -z "$CIRCLE_BRANCH" ]; then
             SONAR_BRANCH="main"
@@ -51,6 +56,11 @@ jobs:
           fi
           echo "Sonar branch value is: $SONAR_BRANCH"
           echo "Sonar org value is : $SONAR_ORG"
+          # Ensure sonar-scanner is executable
+          if ! command -v sonar-scanner &> /dev/null; then
+            echo "sonar-scanner command not found"
+            exit 1
+          fi
           sonar-scanner \
             -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
             -Dsonar.organization="$SONAR_ORG" \
