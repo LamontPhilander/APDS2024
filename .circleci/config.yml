@@ -15,7 +15,7 @@ jobs:
           command: |
             npm install -g sonar-scanner
             sonar-scanner \
-              -Dsonar.projectKey=your_project_key \
+              -Dsonar.projectKey=$SONAR_PROJECT_KEY	 \
               -Dsonar.sources=. \
               -Dsonar.host.url=https://your-sonarqube-instance \
               -Dsonar.login=$SONARQUBE_TOKEN
