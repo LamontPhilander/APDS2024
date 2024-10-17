@@ -1,13 +1,14 @@
 version: 2.1
 
+orbs:
+  sonarcloud: sonarsource/sonarcloud@2.0.0
 jobs:
   sonarqube:
     working_directory: ~/build
     docker:
         - image: cimg/node:17.0
     resource_class: small
-orbs:
-  sonarcloud: sonarsource/sonarcloud@2.0.0
+
     steps:
       - run: find .
       - attach_workspace:
