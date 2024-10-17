@@ -11,10 +11,10 @@ jobs:
   sonarqube:
     working_directory: ~/build
     docker:
-      - image: sonarsource/sonar-scanner-cli
+      - image: circleci/python:3.9
     resource_class: small
     steps:
-      - run: apk update && apk add findutils
+      - checkout
       - run: find .
       - attach_workspace:
           at: ~/workspace
@@ -22,6 +22,7 @@ jobs:
           SONAR_BRANCH="${CIRCLE_BRANCH :- main}"
           echo "Sonar branch value is: "$SONAR_BRANCH
           echo "Sonar org value is : "$SONAR_ORG
+          pip install sonar-scanner-cli
           sonar-scanner \
             -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
             -Dsonar.organization="$SONAR_ORG" \
