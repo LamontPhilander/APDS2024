@@ -17,12 +17,12 @@ jobs:
       - checkout
       - run: sudo apt-get update && sudo apt-get install -y unzip wget
       - run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-          unzip sonar-scanner-cli-4.7.0.2747-linux.zip
-          export PATH=$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610-linux-x64.zip
+          unzip sonar-scanner-cli-6.2.1.4610-linux-x64.zip
+          export PATH=$PATH:$(pwd)/sonar-scanner-cli-6.2.1.4610-linux-x64/bin
       - run: |
           echo "Current PATH: $PATH"
-          ls -la $(pwd)/sonar-scanner-4.7.0.2747-linux/bin
+          ls -la $(pwd)/sonar-scanner-cli-6.2.1.4610-linux-x64/bin
       - run: find .
       - attach_workspace:
           at: ~/workspace
