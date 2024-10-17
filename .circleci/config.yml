@@ -15,7 +15,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - run: sudo apt-get update && sudo apt-get install -y python3-pip
+      - run: sudo apt-get update && sudo apt-get install -y unzip wget
+      - run: wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+      - run: unzip sonar-scanner-cli-4.7.0.2747-linux.zip
+      - run: export PATH=$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin
       - run: find .
       - attach_workspace:
           at: ~/workspace
@@ -27,7 +30,6 @@ jobs:
           fi
           echo "Sonar branch value is: $SONAR_BRANCH"
           echo "Sonar org value is : $SONAR_ORG"
-          pip install sonar-scanner-cli
           sonar-scanner \
             -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
             -Dsonar.organization="$SONAR_ORG" \
