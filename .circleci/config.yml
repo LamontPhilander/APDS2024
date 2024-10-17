@@ -8,6 +8,7 @@ jobs:
     working_directory: ~/build
     docker:
         - image: sonarsource/sonar-scanner-cli
+        - image: cimg/base:current
     resource_class: small
 
     steps:
