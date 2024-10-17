@@ -34,7 +34,7 @@ jobs:
           # Set the correct path
           export PATH=$PATH:$(pwd)/sonar-scanner-6.2.1.4610-linux-x64/bin
           echo "Sonar-scanner added to PATH"
-          
+
       - run: |
           echo "Current working directory: $(pwd)"
           echo "Current PATH: $PATH"
@@ -42,6 +42,18 @@ jobs:
           ls -la
           echo "Contents of sonar-scanner directory:"
           ls -la sonar-scanner-6.2.1.4610-linux-x64/bin || echo "Directory not found"
+          
+          # Check for the sonar-scanner executable
+          echo "Checking for sonar-scanner executable..."
+          ls -la sonar-scanner-6.2.1.4610-linux-x64/bin/sonar-scanner || echo "sonar-scanner not found"
+          
+          # Check if sonar-scanner is executable
+          if [ -x sonar-scanner-6.2.1.4610-linux-x64/bin/sonar-scanner ]; then
+              echo "sonar-scanner is executable"
+          else
+              echo "sonar-scanner is NOT executable"
+              exit 1
+          fi
 
       - run: |
           echo "Checking if sonar-scanner is available in PATH..."
