@@ -2,14 +2,15 @@ version: 2.1
 
 jobs:
   sonar_scan:
+    working_directory: ~/build
     docker:
       - image: sonarsource/sonar-scanner-cli
+    resource_class: small
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            npm install
+      - run: find .
+      - attach_workspace:
+            at: ~/workspace
       - run:
           name: Run SonarQube Scan
           command: |
