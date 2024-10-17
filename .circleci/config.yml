@@ -9,64 +9,12 @@ jobs:
       - run: echo "hello world"
 
   sonarqube:
-    runs-on: ubuntu-latest
     working_directory: ~/build
     docker:
       - image: sonarsource/sonar-scanner-cli
     resource_class: small
     steps:
       - checkout
-      - run: sudo apt-get update && sudo apt-get install -y unzip wget
-      - run: |
-          # Download the SonarQube scanner
-          wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610-linux-x64.zip
-          if [ $? -ne 0 ]; then
-            echo "Failed to download sonar-scanner"
-            exit 1
-          fi
-          
-          # Unzip the downloaded file
-          unzip -q sonar-scanner-cli-6.2.1.4610-linux-x64.zip
-          if [ $? -ne 0 ]; then
-            echo "Failed to unzip sonar-scanner"
-            exit 1
-          fi
-
-          # Check if the unzip created the expected directory
-          if [ ! -d "sonar-scanner-6.2.1.4610-linux-x64" ]; then
-              echo "The expected sonar-scanner directory was not created."
-              exit 1
-          fi
-          
-          # Set the correct path
-          export PATH=$PATH:$(pwd)/sonar-scanner-6.2.1.4610-linux-x64/bin
-          echo "Sonar-scanner added to PATH: $PATH"
-
-      - run: |
-          echo "Current working directory: $(pwd)"
-          echo "Current PATH: $PATH"
-          echo "Contents of the current directory:"
-          ls -la
-          echo "Contents of sonar-scanner directory:"
-          ls -la sonar-scanner-6.2.1.4610-linux-x64/bin || echo "Directory not found"
-
-          # Check for the sonar-scanner executable
-          echo "Checking for sonar-scanner executable..."
-          if [ -f "sonar-scanner-6.2.1.4610-linux-x64/bin/sonar-scanner" ]; then
-              echo "sonar-scanner found at $(pwd)/sonar-scanner-6.2.1.4610-linux-x64/bin/sonar-scanner"
-          else
-              echo "sonar-scanner not found"
-              exit 1
-          fi
-
-          # Check if sonar-scanner is executable
-          if [ -x "sonar-scanner-6.2.1.4610-linux-x64/bin/sonar-scanner" ]; then
-              echo "sonar-scanner is executable"
-          else
-              echo "sonar-scanner is NOT executable"
-              exit 1
-          fi
-
       - run: |
           echo "Checking if sonar-scanner is available in PATH..."
           if command -v sonar-scanner &> /dev/null; then
@@ -75,11 +23,6 @@ jobs:
               echo "sonar-scanner command is NOT available"
               exit 1
           fi
-
-      - run: find .
-
-      - attach_workspace:
-          at: ~/workspace
 
       - run: |
           if [ -z "$CIRCLE_BRANCH" ]; then
