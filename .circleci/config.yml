@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   sonar_scan:
     docker:
-      - image: circleci/node:14.17.0
+      - image: cimg/base:current
     steps:
       - checkout
       - run:
