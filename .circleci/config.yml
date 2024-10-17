@@ -4,11 +4,11 @@ jobs:
   sonar_scan:
     working_directory: ~/build
     docker:
-      - image: sonarsource/sonar-scanner-cli
+      - image: cimg/node:17.0
     resource_class: small
     steps:
       - checkout
-      
+      - run: find .
       - attach_workspace:
             at: ~/workspace
       - run:
