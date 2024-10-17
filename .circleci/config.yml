@@ -19,22 +19,22 @@ jobs:
       - run: |
           # Download the SonarQube scanner
           wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610-linux-x64.zip
-          # Check if download was successful
           if [ $? -ne 0 ]; then
             echo "Failed to download sonar-scanner"
             exit 1
           fi
+          
           # Unzip the downloaded file
           unzip -q sonar-scanner-cli-6.2.1.4610-linux-x64.zip
-          # Check if unzip was successful
           if [ $? -ne 0 ]; then
             echo "Failed to unzip sonar-scanner"
             exit 1
           fi
-          # Export the path for sonar-scanner
+          
+          # Set the correct path
           export PATH=$PATH:$(pwd)/sonar-scanner-6.2.1.4610-linux-x64/bin
           echo "Sonar-scanner added to PATH"
-
+          
       - run: |
           echo "Current working directory: $(pwd)"
           echo "Current PATH: $PATH"
@@ -42,6 +42,15 @@ jobs:
           ls -la
           echo "Contents of sonar-scanner directory:"
           ls -la sonar-scanner-6.2.1.4610-linux-x64/bin || echo "Directory not found"
+
+      - run: |
+          echo "Checking if sonar-scanner is available in PATH..."
+          if command -v sonar-scanner &> /dev/null; then
+              echo "sonar-scanner command is available"
+          else
+              echo "sonar-scanner command is NOT available"
+              exit 1
+          fi
 
       - run: find .
 
@@ -56,11 +65,6 @@ jobs:
           fi
           echo "Sonar branch value is: $SONAR_BRANCH"
           echo "Sonar org value is : $SONAR_ORG"
-          # Ensure sonar-scanner is executable
-          if ! command -v sonar-scanner &> /dev/null; then
-            echo "sonar-scanner command not found"
-            exit 1
-          fi
           sonar-scanner \
             -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
             -Dsonar.organization="$SONAR_ORG" \
