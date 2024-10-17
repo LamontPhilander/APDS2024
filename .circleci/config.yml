@@ -1,28 +1,30 @@
 version: 2.1
 
 jobs:
-  sonar_scan:
+  sonarqube:
     working_directory: ~/build
     docker:
-      - image: cimg/node:17.0
+        - image: sonarsource/sonar-scanner-cli
     resource_class: small
     steps:
-      - checkout
       - run: find .
       - attach_workspace:
             at: ~/workspace
-      - run:
-          name: Run SonarQube Scan
-          command: |
-            npm install -g sonar-scanner
+      - run: |
+            SONAR_BRANCH="${CIRCLE_BRANCH :- main}"
+            echo "Sonar branch value is: "$SONAR_BRANCH
+            echo "Sonar org value is : "$SONAR_ORG
             sonar-scanner \
-              -Dsonar.projectKey=$SONAR_PROJECT_KEY	 \
-              -Dsonar.sources=. \
-              -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.login=$SONARQUBE_TOKEN
+            -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
+            -Dsonar.organization="$SONAR_ORG" \
+            -Dsonar.host.url-https://sonarcloud.io \
+            -Dsonar.exclusions="/android/,/ios/" \
+            -Dsonar.login="$SONAR_TOKEN" \
+            -Dsonar.branch.name="$SONAR_BRANCH" \
+            -Dsonar.sources="."
 
 workflows:
   version: 2
   sonar_workflow:
     jobs:
-      - sonar_scan
+      - sonarqube
