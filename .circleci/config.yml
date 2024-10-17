@@ -34,8 +34,12 @@ jobs:
           # Export the path for sonar-scanner
           export PATH=$PATH:$(pwd)/sonar-scanner-cli-6.2.1.4610-linux-x64/bin
       - run: |
+          echo "Current working directory: $(pwd)"
           echo "Current PATH: $PATH"
-          ls -la $(pwd)/sonar-scanner-cli-6.2.1.4610-linux-x64/bin
+          echo "Contents of the current directory:"
+          ls -la
+          echo "Contents of sonar-scanner-cli directory:"
+          ls -la sonar-scanner-cli-6.2.1.4610-linux-x64/bin || echo "Directory not found"
       - run: find .
       - attach_workspace:
           at: ~/workspace
