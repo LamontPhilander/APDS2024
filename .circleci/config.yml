@@ -15,6 +15,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
+      - run: find .
+      - attach_workspace:
+            at: ~/workspace
+
       - run: |
           echo "Checking if sonar-scanner is available in PATH..."
           if command -v sonar-scanner &> /dev/null; then
