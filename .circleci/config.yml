@@ -17,12 +17,25 @@ jobs:
       - checkout
       - run: sudo apt-get update && sudo apt-get install -y unzip wget
       - run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610-linux-x64.zip
-          unzip sonar-scanner-cli-6.2.1.4610-linux-x64.zip
-          export PATH=$PATH:$(pwd)/sonar-scanner-cli-6.2.1.4610-linux/bin
+          # Download the SonarQube scanner
+          wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610-linux-x64.zip
+          # Check if download was successful
+          if [ $? -ne 0 ]; then
+            echo "Failed to download sonar-scanner"
+            exit 1
+          fi
+          # Unzip the downloaded file
+          unzip -q sonar-scanner-cli-6.2.1.4610-linux-x64.zip
+          # Check if unzip was successful
+          if [ $? -ne 0 ]; then
+            echo "Failed to unzip sonar-scanner"
+            exit 1
+          fi
+          # Export the path for sonar-scanner
+          export PATH=$PATH:$(pwd)/sonar-scanner-cli-6.2.1.4610-linux-x64/bin
       - run: |
           echo "Current PATH: $PATH"
-          ls -la $(pwd)/sonar-scanner-cli-6.2.1.4610-linux/bin
+          ls -la $(pwd)/sonar-scanner-cli-6.2.1.4610-linux-x64/bin
       - run: find .
       - attach_workspace:
           at: ~/workspace
