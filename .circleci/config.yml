@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   sonar_scan:
     docker:
-      - image: cimg/base:current
+      - image: sonarsource/sonar-scanner-cli
     steps:
       - checkout
       - run:
