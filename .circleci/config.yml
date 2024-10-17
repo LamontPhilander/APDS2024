@@ -9,9 +9,10 @@ jobs:
       - run: echo "hello world"
 
   sonarqube:
+    runs-on: ubuntu-latest
     working_directory: ~/build
     docker:
-      - image: cimg/base:current
+      - image: sonarsource/sonar-scanner-cli
     resource_class: small
     steps:
       - checkout
