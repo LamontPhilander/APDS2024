@@ -6,7 +6,7 @@ jobs:
   sonarqube:
     working_directory: ~/build
     docker:
-        - image: cimg/node:17.0
+        - image: sonarsource/sonar-scanner-cli
     resource_class: small
 
     steps:
