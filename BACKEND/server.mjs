@@ -6,7 +6,7 @@ import posts from './routes/post.mjs';
 import users from './routes/user.mjs';
 import rateLimit from 'express-rate-limit';
 
-const PORT = 3000;
+const PORT = 3001;
 const app = express();
 
 // SSL certificate options
