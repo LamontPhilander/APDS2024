@@ -1,13 +1,18 @@
+import express from 'express';
 import https from 'https';
 import fs from 'fs';
-import express from 'express';
 import cors from 'cors';
-import posts from './routes/post.mjs';
-import users from './routes/user.mjs';
+import helmet from 'helmet';
+import authRoutes from './routes/authRoutes.mjs';
+import employeeRoutes from './routes/employeeRoutes.mjs';
 import rateLimit from 'express-rate-limit';
+import db from './db/conn.mjs';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const PORT = 3001;
+
 const app = express();
+const PORT = 3001;
 
 // SSL certificate options
 const options = {
@@ -15,8 +20,9 @@ const options = {
     cert: fs.readFileSync('keys/certificate.pem')
 };
 
-// Middleware
+// Middleware setup
 app.use(cors());
+app.use(helmet());
 app.use(express.json());
 
 // Force HTTPS
@@ -48,9 +54,9 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// Routes
-app.use('/post', posts);
-app.use('/user', users);
+// Route setup
+app.use('/api/auth', authRoutes);
+app.use('/api/employee', employeeRoutes);
 
 // Start HTTPS server
 https.createServer(options, app).listen(PORT, () => {

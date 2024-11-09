@@ -1,0 +1,52 @@
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import dotenv from "dotenv";
+import Employee from './Employee.mjs';  // Adjust the path if needed
+
+dotenv.config();
+
+// MongoDB connection
+const connectionString = process.env.ATLAS_URI || "";
+await mongoose.connect(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+// Define employee creation function
+const createEmployees = async () => {
+  try {
+    // Define employee details
+    const employees = [
+      {
+        name: "employee1",
+        password: "password123", // This will be hashed
+        role: "employee"
+      },
+      {
+        name: "employee2",
+        password: "password456", // This will be hashed
+        role: "employee"
+      }
+    ];
+
+    // Hash passwords and create employee records
+    for (let employee of employees) {
+      const hashedPassword = await bcrypt.hash(employee.password, 10);
+      await Employee.create({ 
+        name: employee.name,
+        password: hashedPassword,
+        role: employee.role
+      });
+      console.log(`Employee created: ${employee.name}`);
+    }
+
+    console.log("Employees successfully created.");
+  } catch (error) {
+    console.error("Error creating employees:", error);
+  } finally {
+    mongoose.connection.close(); // Close connection after operation
+  }
+};
+
+// Run the employee creation function
+createEmployees();
