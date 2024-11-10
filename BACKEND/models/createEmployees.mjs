@@ -6,11 +6,9 @@ import Employee from './Employee.mjs';  // Adjust the path if needed
 dotenv.config();
 
 // MongoDB connection
-const connectionString = process.env.ATLAS_URI || "";
-await mongoose.connect(connectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+const connectionString = "mongodb+srv://lamont_llp:KMqGYY1eHB1PmEgW@cluster0.eaymm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const dbName = process.env.DB_NAME || "users"; // Use environment variable for DB name
+await mongoose.connect(connectionString, { dbName });
 
 // Define employee creation function
 const createEmployees = async () => {

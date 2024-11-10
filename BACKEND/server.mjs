@@ -1,3 +1,4 @@
+import db from './db/conn.mjs';
 import express from 'express';
 import https from 'https';
 import fs from 'fs';
@@ -6,7 +7,6 @@ import helmet from 'helmet';
 import authRoutes from './routes/authRoutes.mjs';
 import employeeRoutes from './routes/employeeRoutes.mjs';
 import rateLimit from 'express-rate-limit';
-import db from './db/conn.mjs';
 import dotenv from 'dotenv';
 dotenv.config();
 
