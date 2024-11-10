@@ -5,6 +5,7 @@ import fs from 'fs';
 import cors from 'cors';
 import helmet from 'helmet';
 import authRoutes from './routes/authRoutes.mjs';
+import paymentRoutes from './routes/paymentRoutes.mjs';
 import employeeRoutes from './routes/employeeRoutes.mjs';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
@@ -57,6 +58,7 @@ app.use(limiter);
 // Route setup
 app.use('/api/auth', authRoutes);
 app.use('/api/employee', employeeRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Start HTTPS server
 https.createServer(options, app).listen(PORT, () => {
