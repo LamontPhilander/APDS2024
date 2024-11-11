@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Navbar from "./Navbar";
 
 const CustomerPayment = () => {
   const [form, setForm] = useState({
@@ -56,6 +57,7 @@ const CustomerPayment = () => {
 
   return (
     <div className="payment-container">
+      <Navbar isAuthenticated={true} onLogout={() => {}} />
       <h2>Make a Payment</h2>
       <form className="payment-form" onSubmit={handleSubmit}>
         <div className="form-group">

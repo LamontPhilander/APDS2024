@@ -2,6 +2,7 @@ import "../App.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const Dashboard = () => {
   const [customerData, setCustomerData] = useState(null);
@@ -51,6 +52,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
+      <Navbar isAuthenticated={true} onLogout={() => {}} />
       <h2>Welcome, {customerData.fullName}</h2>
       <p>Account Number: {customerData.accountNumber}</p>
 
