@@ -20,15 +20,17 @@ const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key"; // Use a sec
 
 // Customer Registration
 router.post('/register', async (req, res) => {
-  const namePattern = /^[a-zA-Z0-9]{3,30}$/;
+  const namePattern = /^[a-zA-Z0-9\s]{3,30}$/;
   const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
   const { fullName, idNumber, accountNumber, password } = req.body;
 
   if (!validateInput(req.body.fullName, namePattern)) {
+    console.log("Invalid name format");
     return res.status(400).json({ message: "Invalid name format" });
   }
   if (!validateInput(req.body.password, passwordPattern)) {
+    console.log("Invalid password format");
     return res.status(400).json({ message: "Password must be at least 8 characters, contain letters and numbers" });
   }
   

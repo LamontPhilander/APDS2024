@@ -61,11 +61,12 @@ const Login = () => {
   return (
     <div className="login-container">
       <h2>Login</h2>
-      <div>
+      <div className="radio-labels">
         <label>
           <input
             type="radio"
             name="loginType"
+            className="ml-3 mr-1"
             checked={!isEmployee}
             onChange={() => setIsEmployee(false)}
           />
@@ -75,6 +76,7 @@ const Login = () => {
           <input
             type="radio"
             name="loginType"
+            className="ml-3 mr-1"
             checked={isEmployee}
             onChange={() => setIsEmployee(true)}
           />
