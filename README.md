@@ -18,11 +18,22 @@ This is an internal international payment system designed to handle secure trans
 - Provide receiver account details and SWIFT code for payment processing.
 - Finalize payment by clicking on the "Pay Now" button.
 
+#### **Test Login Credentials:**
+
+- username: Lamont Philander | accountNumber: CAP1234567 | password: password123
+- username: John Doe | accountNumber: ACC1234566 | password: custpassword1
+- username: Jane Smith | accountNumber: ACC6543211 | password: custpassword2
+
 ### **Employee Features:**
 
 - Employee login and authentication.
 - View transactions and manage employee details.
 - Approve and verify transaction details before submission for SWIFT payment processing.
+
+#### **Test Login Credentials:**
+
+- username: employee1 | password: password123
+- username: employee2 | password: password123
 
 ### **Shared Features:**
 
@@ -75,9 +86,9 @@ This is an internal international payment system designed to handle secure trans
 3. Set up environment variables:
 
    - Create a `.env` file in the `BACKEND` directory and add the following:
-     `   ATLAS_URI="mongodb+srv://lamont_llp:KMqGYY1eHB1PmEgW@cluster0.eaymm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+     ` ATLAS_URI="mongodb+srv://lamont_llp:KMqGYY1eHB1PmEgW@cluster0.eaymm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 JWT_SECRET=37a6f4dcfa37a470b3f8c03cb2b9d20272828c4c2277bc386d30e19068cd56f6
-  `
+`
 
 4. Start the server:
    ```bash
