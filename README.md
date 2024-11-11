@@ -1,4 +1,4 @@
-This is a university project for the module: APDS7312
+This is a university project for the module: APDS7311
 
 ---
 
@@ -86,9 +86,8 @@ This is an internal international payment system designed to handle secure trans
 3. Set up environment variables:
 
    - Create a `.env` file in the `BACKEND` directory and add the following:
-     ` ATLAS_URI="mongodb+srv://lamont_llp:KMqGYY1eHB1PmEgW@cluster0.eaymm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-JWT_SECRET=37a6f4dcfa37a470b3f8c03cb2b9d20272828c4c2277bc386d30e19068cd56f6
-`
+     `ATLAS_URI="mongodb+srv://lamont_llp:KMqGYY1eHB1PmEgW@cluster0.eaymm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+JWT_SECRET=37a6f4dcfa37a470b3f8c03cb2b9d20272828c4c2277bc386d30e19068cd56f6`
 
 4. Start the server:
    ```bash
