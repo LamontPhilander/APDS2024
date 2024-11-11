@@ -47,21 +47,35 @@ const populateTestData = async () => {
     }
 
     // Insert customers
+    const customerIds = []; // To store customer IDs for later reference in transactions
     for (let customer of customers) {
       const hashedPassword = await bcrypt.hash(customer.password, 10);
-      await Customer.create({
+      const newCustomer = await Customer.create({
         fullName: customer.fullName,
         idNumber: customer.idNumber,
         accountNumber: customer.accountNumber,
         password: hashedPassword
       });
+      customerIds.push(newCustomer._id); // Save the customer's ID for transaction association
       console.log(`Customer created: ${customer.fullName}`);
     }
 
-    // Insert Transactions
+    // Insert Transactions and associate with customer
     for (let transaction of transactions) {
-      await Transaction.create(transaction);
-      console.log(`Transaction created with amount: ${transaction.amount} ${transaction.currency}`);
+      // Find the sender and receiver customers by account number
+      const senderCustomer = await Customer.findOne({ accountNumber: transaction.senderAccount });
+      const receiverCustomer = await Customer.findOne({ accountNumber: transaction.receiverAccount });
+
+      // Associate the transaction with the corresponding customers
+      if (senderCustomer && receiverCustomer) {
+        await Transaction.create({
+          ...transaction,
+          customerId: senderCustomer._id  // Link transaction to sender's customer ID
+        });
+        console.log(`Transaction created with amount: ${transaction.amount} ${transaction.currency}`);
+      } else {
+        console.log(`Error: One or more customers not found for transaction with amount ${transaction.amount} ${transaction.currency}`);
+      }
     }
 
     console.log("Test data successfully populated.");

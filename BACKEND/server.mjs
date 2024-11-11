@@ -7,6 +7,7 @@ import helmet from 'helmet';
 import authRoutes from './routes/authRoutes.mjs';
 import paymentRoutes from './routes/paymentRoutes.mjs';
 import employeeRoutes from './routes/employeeRoutes.mjs';
+import customerRoutes from './routes/customerRoutes.mjs';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -59,6 +60,7 @@ app.use(limiter);
 app.use('/api/auth', authRoutes);
 app.use('/api/employee', employeeRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/customer', customerRoutes);
 
 // Start HTTPS server
 https.createServer(options, app).listen(PORT, () => {

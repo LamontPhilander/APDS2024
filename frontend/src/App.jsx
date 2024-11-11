@@ -1,23 +1,30 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ProtectedRoute from './components/ProtectedRoute';
-import Login from './components/Login';
-import PaymentsPortal from './components/PaymentsPortal';
+import { Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./components/Login.jsx";
+import PaymentsPortal from "./components/PaymentsPortal";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/payments"
-          element={
-            <ProtectedRoute allowedRoles={['staff']}>
-              <PaymentsPortal />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={["customer"]}>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/payments"
+        element={
+          <ProtectedRoute allowedRoles={["employee"]}>
+            <PaymentsPortal />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   );
 }
 

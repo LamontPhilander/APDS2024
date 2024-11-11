@@ -37,10 +37,18 @@ const transactionSchema = new Schema({
     enum: ['Pending', 'In-Progress', 'Completed', 'Failed'],
     default: 'Pending'
   },
+  customerId: {  // New field to link to the Customer model
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Customer', // Assuming you have a Customer model
+    required: true
+  },
   createdAt: {
     type: Date,
     default: Date.now
   },
+  verified: { 
+    type: Boolean, 
+    default: false },
   updatedAt: {
     type: Date,
     default: Date.now
