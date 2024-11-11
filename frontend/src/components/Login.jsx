@@ -50,7 +50,7 @@ const Login = () => {
       if (isEmployee) {
         navigate("/payments");
       } else {
-        navigate("/dashboard");
+        navigate("/payment");
       }
     } catch (err) {
       setError("Invalid credentials, please try again");

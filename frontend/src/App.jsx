@@ -3,6 +3,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./components/Login.jsx";
 import PaymentsPortal from "./components/PaymentsPortal";
 import Dashboard from "./components/Dashboard";
+import CustomerPayment from "./components/CustomerPayment.jsx";
 
 function App() {
   return (
@@ -13,6 +14,14 @@ function App() {
         element={
           <ProtectedRoute allowedRoles={["customer"]}>
             <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/payment"
+        element={
+          <ProtectedRoute allowedRoles={["customer"]}>
+            <CustomerPayment />
           </ProtectedRoute>
         }
       />

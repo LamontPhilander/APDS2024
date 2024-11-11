@@ -48,4 +48,43 @@ router.get('/dashboard', checkAuth, async (req, res) => {
     }
   });
 
+  router.post('/payment', checkAuth, async (req, res) => {
+    const { amount, currency, provider, receiverAccount, receiverSWIFTCode } = req.body;
+  
+    // Check if all required fields (except senderAccount) are provided
+    if (!amount || !currency || !provider || !receiverAccount || !receiverSWIFTCode) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+  
+    try {
+      // Find the customer’s account number using the authenticated user's ID
+      const customer = await Customer.findById(req.user.id);
+  
+      if (!customer) {
+        return res.status(404).json({ error: 'Customer not found' });
+      }
+  
+      // Use the customer's account number as the senderAccount
+      const transaction = new Transaction({
+        amount,
+        currency,
+        provider,
+        receiverAccount,
+        receiverSWIFTCode,
+        senderAccount: customer.accountNumber, // Automatically set senderAccount
+        status: 'Pending',
+        customerId: req.user.id, // Link transaction to the customer
+      });
+  
+      // Save the transaction
+      await transaction.save();
+  
+      res.status(200).json({ message: 'Payment processed successfully' });
+    } catch (error) {
+      console.error('Error processing payment:', error);
+      res.status(500).json({ error: 'Error processing payment' });
+    }
+  });
+  
+
   export default router;
