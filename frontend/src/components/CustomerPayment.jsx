@@ -38,6 +38,8 @@ const CustomerPayment = () => {
         }
       );
 
+      // Show success message using response data
+      console.log("Payment processed:", response.data);
       setSuccess("Payment processed successfully!");
       setForm({
         amount: "",
