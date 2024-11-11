@@ -41,7 +41,7 @@ const CustomerPayment = () => {
       setSuccess("Payment processed successfully!");
       setForm({
         amount: "",
-        currency: "USD",
+        currency: "ZAR",
         provider: "SWIFT",
         receiverAccount: "",
         receiverSWIFTCode: "",

@@ -30,8 +30,8 @@ const populateTestData = async () => {
 
     // Sample Transactions
     const transactions = [
-      { amount: 1500, currency: "USD", senderAccount: "ACC1234566", receiverAccount: "ACC6543211", receiverSWIFTCode:"ABC1234567", status: "Pending" },
-      { amount: 3000, currency: "EUR", senderAccount: "ACC6543211", receiverAccount: "ACC1234566", receiverSWIFTCode:"BAC1234567", status: "Completed" }
+      { amount: 1500, currency: "ZAR", senderAccount: "ACC1234566", receiverAccount: "ACC6543211", receiverSWIFTCode:"ABC1234567", status: "Pending" },
+      { amount: 3000, currency: "ZAR", senderAccount: "ACC6543211", receiverAccount: "ACC1234566", receiverSWIFTCode:"BAC1234567", status: "Completed" }
     ];
 
     // Clear existing data
