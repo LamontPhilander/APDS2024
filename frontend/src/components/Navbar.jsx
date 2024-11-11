@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom"; // Assuming you're using react-router for navigation
-import { useState } from "react";
 
 const Navbar = ({ isAuthenticated, onLogout }) => {
   const navigate = useNavigate();
